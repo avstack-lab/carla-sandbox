@@ -1,0 +1,16 @@
+carla_eggs
+
+__pycache__
+.ipynb_checkpoints/
+
+# DATA
+/sim-results/
+*.p
+*.pkl
+*.txt
+*.bin
+*.png
+*.ply
+*.tiff
+*.tif
+*.jpeg

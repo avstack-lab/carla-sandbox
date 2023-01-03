@@ -1,0 +1,6 @@
+[submodule "submodules/lib-avstack-core"]
+	path = submodules/lib-avstack-core
+	url = git@github.com:avstack-lab/lib-avstack-core.git
+[submodule "submodules/lib-avstack-api"]
+	path = submodules/lib-avstack-api
+	url = git@github.com:avstack-lab/lib-avstack-api.git
