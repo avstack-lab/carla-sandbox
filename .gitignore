@@ -1,4 +1,5 @@
-carla_eggs
+carla_eggs/*.egg
+carla_eggs/*.whl
 
 __pycache__
 .ipynb_checkpoints/
