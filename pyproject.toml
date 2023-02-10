@@ -17,9 +17,13 @@ include = ["CHANGELOG.md"]
 [tool.poetry.dependencies]
 python = "~3.8"
 pygame = "^2.1"
+carla = "=0.9.13"
 torch = { url = "https://download.pytorch.org/whl/cu113/torch-1.10.0%2Bcu113-cp38-cp38-linux_x86_64.whl" }
 lib-avstack-api = { path = "submodules/lib-avstack-api", develop = true }
 lib-avstack-core = { path = "submodules/lib-avstack-core", develop = true }
+
+[tool.poetry.group.test.dependencies]
+snakeviz="^2.1.1"
 
 [build-system]
 requires = [

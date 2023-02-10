@@ -9,7 +9,7 @@ Run a standard scenario from config file
 """
 
 
-import os, sys, glob
+import os
 import argparse
 import logging
 import random
@@ -19,33 +19,9 @@ import shutil
 from datetime import datetime
 from collections import deque
 
-
-def add_carla_eggs(version='0.9.13', raise_on_error=True):
-    try:
-        carla_folder = os.environ['CARLA_EGGS']
-        egg_file = os.path.join(carla_folder, 'carla-*%d.%d-%s.egg' % (
-            sys.version_info.major,
-            sys.version_info.minor,
-            'win-amd64' if os.name == 'nt' else 'linux-x86_64'))
-        for efile in glob.glob(egg_file):
-            if version in efile:
-                assert os.path.exists(efile)
-                sys.path.append(efile)
-                print(f'Added {efile} to python path')
-                break
-        else:
-            msg = f'Could not find carla egg file...tried path {carla_folder}'
-            if raise_on_error:
-                raise RuntimeError(msg)
-            else:
-                return False, msg
-    except KeyError as e:
-        msg = 'Could not get env variable CARLA_EGGS. Did you source setup_for_standard.bash first???'
-        if raise_on_error:
-            raise KeyError(msg)
-        else:
-            return False, msg
-    return True, 'Found egg'
+import avstack
+from avapi.carla import config
+from avapi.carla.simulator import bootstrap
 
 
 def extend_save_folder(folder_base):
@@ -62,11 +38,7 @@ def main(args):
     if args.version in ['0.9.10', '0.9.10.1']:
         raise RuntimeError(f'Do not use version {args.version} because the sensor timing is buggy!')
 
-    add_carla_eggs(version=args.version)
-
-    # -- 
-    import avstack
-    from avapi.carla import config, bootstrap
+    traffic_manager = None
     carla_manager = None
     display_manager = None
     cfg_carla = config.read_config(args.config_carla)
@@ -145,11 +117,12 @@ def main(args):
         if args.hard_fail:
             raise e
         else:
-            logging.warning(e)
+            logging.warning(e, exc_info=True)
     finally:
         if started:
-            print(f'Waiting {args.image_dump_time} sec to allow images to dump...', end='', flush=True)
-            time.sleep(args.image_dump_time)
+            if carla_manager.recorder is not None:
+                print(f'Waiting {args.image_dump_time} sec to allow images to dump...', end='', flush=True)
+                time.sleep(args.image_dump_time)
         print('Done!')
         print('\n')
         if display_manager is not None:

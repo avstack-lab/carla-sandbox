@@ -55,55 +55,9 @@ Use ARROWS or WASD keys for control.
 """
 
 from __future__ import print_function
-
-
-# ==============================================================================
-# -- find carla module ---------------------------------------------------------
-# ==============================================================================
-
-
-import glob
 import os
 import sys
-
-# Version of scenario_runner
-VERSION = '0.9.13'
-
-# ----------------------------------------------------------
-# CARLA IMPORTS
-try:
-    carla_folder = os.environ['CARLA_EGGS']
-    egg_file = os.path.join(carla_folder, 'carla-*%d.%d-%s.egg' % (
-        sys.version_info.major,
-        sys.version_info.minor,
-        'win-amd64' if os.name == 'nt' else 'linux-x86_64'))
-
-    found_egg = False
-    for efile in glob.glob(egg_file):
-        if VERSION in efile:
-            sys.path.append(efile)
-            found_egg = True
-            break
-    if not found_egg:
-        raise RuntimeError(f'Could not find carla egg file...tried path {carla_folder}')
-    else:
-        import carla
-except IndexError as e:
-    raise e
-except KeyError as e:
-    msg = 'Could not get env variable CARLA_EGGS. Did you source a setup bash file first???'
-    raise KeyError(msg)
-# ----------------------------------------------------------
-
-
-
-# ==============================================================================
-# -- imports -------------------------------------------------------------------
-# ==============================================================================
-
-
 import carla
-
 from carla import ColorConverter as cc
 
 import argparse

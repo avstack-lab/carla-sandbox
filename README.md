@@ -66,14 +66,6 @@ cd submodules/lib-avstack-core/models
 ./download_mmdet3d_models.sh
 ```
 
-### Download carla egg files
-
-We have pre-compiled some carla eggs to use. You will need to match the Carla version and the Python version to the egg file. You can download the egg file for Carla 0.9.13 and Python 3.8 using
-```
-cd carla_eggs
-./download_carla13_py38_egg.sh
-```
-
 ## Running
 
 ### First: run carla through any shell (uses docker)
@@ -92,7 +84,7 @@ poetry shell
 Then you can run an example such as
 ```
 cd examples
-./run_following_gt_level2.sh 1
+./run_autopilot.sh
 ```
 **Note:** You should be in the `examples` folder before running the example scripts.
 
@@ -126,15 +118,6 @@ CARLA docker is not displaying
 If the docker container process was previously running for a *different* user, it may be trying to show the display for that other user. Check if there is a process using `docker ps -a` to get the ID's of any containers running and use `docker rm <CONTAINER ID HERE>` to officially stop and remove a process before trying again.
 </details>
 <br>
-
-<details>
-<summary>
-Cannot create <code>poetry.lock</code> file due to <code>torch</code> dependence of <code>mmdetection</code> build
-</summary>
-<br>
-
-Still working out how to create a fresh `poetry.lock` file (i.e. when there is not one that exists). If there is one that exists and you do not change `mmdetection` or `mmdetection3d` dependencies, it seems that there is no problem. For now, just don't remove the existing `poetry.lock` file and simply rerun `poetry lock` after a change is made to `pyproject.toml`. 
-</details>
 <br>
 
 
