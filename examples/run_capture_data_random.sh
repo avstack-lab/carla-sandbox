@@ -1,14 +1,8 @@
-# @Author: spencer@primus
-# @Date:   2022-09-26
-# @Last Modified by:   spencer@primus
-# @Last Modified time: 2022-09-30
-
 #!/usr/bin/env bash
 
 VERSION=${1:-0.9.13}
 N_SCENARIOS=${2:-20}
 MAX_SCENARIO_LEN=${3:-20}
-
 
 python exec_standard.py \
   --n_scenarios $N_SCENARIOS \
