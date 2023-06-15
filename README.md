@@ -8,11 +8,11 @@ Testing autonomous vehicles made *easy*.
 
 This project is currently organized using submodules. In more stable releases, it will be managed with a package manager like `pip`. For now in an *alpha* stage of development, we stay light on our feet by using submodules and [`poetry`][poetry]
 
-**NOTE:** This currently only works on a Linux distribution (tested on Ubuntu 20.04). It also only works with Python 3.8 (to be expanded in the future).
+**NOTE:** This currently only works on a Linux distribution (tested on Ubuntu 20.04 and 22.04). It also only works with Python 3.8 (to be expanded in the future).
 
 ### Requirements
 
-While Carla does not require use of a GPU, it is highly recommended. Using libraries like `mmdet` (for perception) will certainly require a gpu.
+While Carla does not require use of a GPU, it is highly recommended. Using libraries like `mmdet` (for perception, as in [`avstack-core`][avstack-core]) will certainly require a gpu.
 
 ### Preliminaries
 
@@ -23,9 +23,9 @@ git clone --recurse-submodules https://github.com/avstack-lab/carla-sandbox.git
 git submodule update --recursive
 ```
 
-Dependencies are managed with [`poetry`][poetry]. This uses the `pyproject.toml` file to create a `poetry.lock` file. It includes an optional `perception` group so that you can install `avstack` without all the large packages necessary for perception. To install poetry, see [this page](https://python-poetry.org/docs/#installation). 
+Dependencies are managed with [`poetry`][poetry]. This uses the `pyproject.toml` file to create a `poetry.lock` file. To install poetry, see [this page](https://python-poetry.org/docs/#installation). 
 
-#### `Docker`
+#### `Docker` - last updated June 2023
 If [`docker`][docker] is not installed, install with something like
 ```
 curl https://get.docker.com | sh \
@@ -53,17 +53,17 @@ sudo docker run --rm --gpus all nvidia/cuda:11.0.3-base-ubuntu20.04 nvidia-smi
 ```
 
 ### Install Dependencies
+
+#### Environment
+Will take about 2-3 minutes, depending on your cpu count.
 ```
 poetry install
 ```
 
-#### With Perception
-
-For now, you must set the submodules with perception. This will be fixed in a future release. If you wish to use perception, you must download some of the perception models. To download a pre-selected sample of models, run
+#### Models/Datasets
+Will take about 5 minutes the first time you download.
 ```
-cd submodules/lib-avstack-core/models
-./download_mmdet_models.sh
-./download_mmdet3d_models.sh
+./initialize.sh
 ```
 
 ## Running
@@ -81,11 +81,18 @@ The examples are run as shell scripts. Therefore, you have to first activate the
 poetry shell
 ```
 
-Then you can run an example such as
+Try running a non-perception example such as:
 ```
 cd examples
 ./run_autopilot.sh
 ```
+
+Then try running a perception example such as:
+```
+cd examples
+./run_autopilot_camera_perception.sh
+```
+
 **Note:** You should be in the `examples` folder before running the example scripts.
 
 ## Troubleshooting
@@ -134,5 +141,7 @@ AVstack specific code is distributed under the MIT License.
 [poetry]: https://github.com/python-poetry/poetry
 [docker]: https://www.docker.com/
 [nvidia-docker]: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker
+[avstack-core]: https://github.com/avstack-lab/lib-avstack-core
+[avstack-api]: https://github.com/avstack-lab/lib-avstack-api
 [contributing]: https://github.com/avstack-lab/lib-avstack-core/blob/main/CONTRIBUTING.md
 [license]: https://github.com/avstack-lab/lib-avstack-core/blob/main/LICENSE.md
