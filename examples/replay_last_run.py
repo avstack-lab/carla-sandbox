@@ -8,14 +8,13 @@
 
 """
 
-import os
 import avapi
 
 
-with open('data/last_run.txt', 'r') as f:
+with open("data/last_run.txt", "r") as f:
     lines = [line.rstrip() for line in f]
 
 if len(lines) > 1:
-    raise NotImplementedError('Cannot handle multiple files yet')
+    raise NotImplementedError("Cannot handle multiple files yet")
 else:
     avapi.visualize.replay.replay_ground_truth(lines[0])

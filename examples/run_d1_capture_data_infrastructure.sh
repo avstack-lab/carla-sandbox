@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-VERSION=${1:-0.9.13}
-N_SCENARIOS=${2:-20}
-MAX_SCENARIO_LEN=${3:-20}
+N_SCENARIOS=${1:-20}
+MAX_SCENARIO_LEN=${2:-20}
 
 source setup_for_standard.bash
 
@@ -12,5 +11,4 @@ python exec_standard.py \
     --config_avstack 'PassthroughAutopilotVehicle' \
     --config_carla 'scenarios/collaborative_capture_data.yml' \
     --image_dump_time 25 \
-    --seed 1 \
-    --version $VERSION
+    --seed 1
