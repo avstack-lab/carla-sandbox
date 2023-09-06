@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 N_SCENARIOS=${1:-20}
-MAX_SCENARIO_LEN=${2:-2}
+MAX_SCENARIO_LEN=${2:-20}
 
 python exec_standard.py \
 	--n_scenarios $N_SCENARIOS \
