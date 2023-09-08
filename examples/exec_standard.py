@@ -10,6 +10,7 @@ Run a standard scenario from config file
 
 
 import argparse
+import cProfile
 import logging
 import os
 import random
@@ -17,7 +18,6 @@ import shutil
 import time
 from collections import deque
 from datetime import datetime
-import cProfile
 
 import avstack
 import pygame
@@ -110,6 +110,7 @@ def main(args):
                 if cfg_carla["ego"]["respawn_on_done"]:
                     if i_repeats_done < args.n_scenarios:
                         print("\ndone...restarting for a new run!")
+                        time.sleep(5)
                         time_deltas.clear()
                         i_frames = 0
                         carla_manager.restart(
@@ -208,5 +209,4 @@ if __name__ == "__main__":
     pr.enable()
     main(args)
     pr.disable()
-    pr.dump_stats('last_run.prof')
-
+    pr.dump_stats("last_run.prof")

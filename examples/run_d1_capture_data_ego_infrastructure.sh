@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 N_SCENARIOS=${1:-20}
-MAX_SCENARIO_LEN=${2:-20}
+MAX_SCENARIO_LEN=${2:-40}
 
 source setup_for_standard.bash
 
