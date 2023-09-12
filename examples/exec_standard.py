@@ -32,6 +32,7 @@ def extend_save_folder(folder_base):
 
 
 def main(args):
+    print('Random seed: {}'.format(args.seed))
     random.seed(args.seed)
     if args.remove_data and os.path.exists("sim-results/"):
         print("Removing existing sensor data...", end="")
