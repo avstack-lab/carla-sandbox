@@ -4,6 +4,3 @@
 [submodule "submodules/lib-avstack-api"]
 	path = submodules/lib-avstack-api
 	url = https://github.com/avstack-lab/lib-avstack-api.git
-[submodule "submodules/mAP"]
-	path = submodules/mAP
-	url = git@github.com:cpsl-research/mAP.git
