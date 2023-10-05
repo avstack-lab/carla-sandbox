@@ -15,9 +15,9 @@ keywords = ["carla", "autonomy", "autonomous vehicles"]
 include = ["CHANGELOG.md"]
 
 [tool.poetry.dependencies]
-python = "~3.8"
+python = "~3.10"
 pygame = "^2.1"
-carla = "=0.9.13"
+#carla = "=0.9.13"
 lib-avstack-api = { path = "submodules/lib-avstack-api", develop = true }
 lib-avstack-core = { path = "submodules/lib-avstack-core", develop = true }
 
