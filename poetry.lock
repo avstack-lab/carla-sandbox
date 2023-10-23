@@ -363,6 +363,20 @@ files = [
 ]
 
 [[package]]
+name = "carla"
+version = "0.9.13"
+description = "Python API for communicating with the CARLA server."
+optional = false
+python-versions = "*"
+files = [
+    {file = "carla-0.9.13-cp310-cp310-linux_x86_64.whl", hash = "sha256:ae37dd5db6490ff44751bc4523b4769b6ed76ed975342f566b63a5f43cc3a171"},
+]
+
+[package.source]
+type = "url"
+url = "https://g-b0ef78.1d0d8d.03c0.data.globus.org/packages/carla/carla-0.9.13-cp310-cp310-linux_x86_64.whl"
+
+[[package]]
 name = "certifi"
 version = "2023.7.22"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -5157,4 +5171,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "~3.10"
-content-hash = "381bb2d3b27aa7637af684de098d8788cf4b576f6bcd50c925a2da53fa364d1d"
+content-hash = "ec904f4cf6fe4968a99cc98d0b9e2fdad3b09423275ff24ac9dc9fa26930318e"
