@@ -19,7 +19,7 @@ python = "~3.10"
 pygame = "^2.1"
 carla = { url = "https://g-b0ef78.1d0d8d.03c0.data.globus.org/packages/carla/carla-0.9.13-cp310-cp310-linux_x86_64.whl" }
 lib-avstack-api = { path = "submodules/lib-avstack-api", develop = true }
-lib-avstack-core = { path = "submodules/lib-avstack-core", develop = true }
+lib-avstack-core = { path = "submodules/lib-avstack-core", extras = ["percep", "serve"], develop = true }
 
 [tool.poetry.group.test.dependencies]
 snakeviz="^2.1.1"
