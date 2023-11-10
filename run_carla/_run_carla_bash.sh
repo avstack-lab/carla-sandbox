@@ -24,7 +24,6 @@ then
 	  --name carla_docker_"${VERSION//./}" \
 	  --privileged \
 	  --cpuset-cpus="0-5" \
-	  --restart always \
 	   --runtime=nvidia \
 	    --gpus 'all,"capabilities=graphics,utility,display,video,compute"' \
 	     -e DISPLAY=$DISPLAY \
