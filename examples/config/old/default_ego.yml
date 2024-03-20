@@ -1,0 +1,17 @@
+---
+idx_spawn: 0
+idx_vehicle: 0
+idx_destination: null
+delta_destination: null
+roaming: false
+respawn_on_done: false
+max_speed: 40
+autopilot: False  # this is for simulation-defined autopilot
+
+sensors:
+  - camera 0:
+      name: 'camera-0'
+  - gnss 0:
+      name: 'gnss-0'
+  - imu 0:
+      name: 'imu-0'

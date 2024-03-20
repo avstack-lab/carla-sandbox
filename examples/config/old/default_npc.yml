@@ -1,0 +1,12 @@
+---
+type: 'vehicle'
+idx_vehicle: 0
+idx_spawn: 2
+autopilot: false
+delta_spawn:
+  x: 0
+  y: 0
+  z: 0
+events: # each list entry is a list of [time, event data]
+  pct_speed: null  # each list entry is a list of [time, pct speed]
+  lane_change: null  # each list entry is a list of [time, boolean (true=right, false=left)]

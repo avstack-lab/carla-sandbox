@@ -19,10 +19,9 @@ import time
 from collections import deque
 from datetime import datetime
 
-import avstack
 import pygame
-from avapi.carla import config
-from avapi.carla.simulator import bootstrap
+from avcarla import CARLA
+from avstack.config import Config
 
 
 def extend_save_folder(folder_base):
@@ -32,11 +31,11 @@ def extend_save_folder(folder_base):
 
 
 def main(args):
-    print('Random seed: {}'.format(args.seed))
+    print("Random seed: {}".format(args.seed))
     random.seed(args.seed)
-    if args.remove_data and os.path.exists("sim-results/"):
+    if args.remove_data and os.path.exists(args.save_folder):
         print("Removing existing sensor data...", end="")
-        shutil.rmtree("sim-results/")
+        shutil.rmtree(args.save_folder)
         print("done")
 
     if args.version in ["0.9.10", "0.9.10.1"]:
@@ -44,91 +43,76 @@ def main(args):
             f"Do not use version {args.version} because the sensor timing is buggy!"
         )
 
-    traffic_manager = None
-    carla_manager = None
-    display_manager = None
-    keyboard_control = None
+    client = None
+    display = None
+    actor_manager = None
+    npc_manager = None
     clock = None
-    cfg_carla = config.read_config(args.config_carla)
+
+    cfg_manager = Config.fromfile(args.config_manager)
+    cfg_world = Config.fromfile(args.config_world)
 
     # Main loop
-    started = False
     try:
-        # -- avstack inits
-        ego_stack = avstack.ego.get_ego("vehicle", args.config_avstack)
+        # -- initializations
+        client = CARLA.build(cfg_world["client"])
+        actor_manager = CARLA.build(
+            cfg_manager["actor_manager"], default_args={"client": client}
+        )
+        npc_manager = CARLA.build(
+            cfg_manager["npc_manager"], default_args={"client": client}
+        )
+        client.on_tick(actor_manager.on_world_tick)
+        client.on_tick(npc_manager.on_world_tick)
 
-        # -- carla inits
-        client, world, traffic_manager, orig_settings = bootstrap.bootstrap_client(
-            cfg_carla.get("client", None)
-        )
-        carla_manager = bootstrap.bootstrap_standard(
-            world,
-            traffic_manager,
-            ego_stack,
-            cfg_carla,
-            extend_save_folder(args.save_folder),
-        )
         if not args.no_display:
-            display_manager, keyboard_control = bootstrap.bootstrap_display(
-                world, carla_manager.ego, cfg_carla.get("display"), None
+            display = CARLA.build(
+                cfg_world["display"],
+                default_args={"client": client, "manager": actor_manager},
             )
-
-        if display_manager is not None:
             clock = pygame.time.Clock()
-            world.on_tick(display_manager.hud.on_world_tick)
-            if args.view == "standard":
-                pass
-            elif args.view == "front":
-                display_manager.toggle_camera()
 
         # -- run loop
-        world.tick()
         time.sleep(1)  # wait for settling
         i_repeats_done = 0
         t_last = time.time()
         i_frames = 0
         time_deltas = deque(maxlen=10)
+        started = False
         print("\n")
 
         # -- print display information
-        if display_manager is not None:
-            display_manager.print_init()
+        if display is not None:
+            display.print_init()
         while True:
-            # -- tick the simulator
-            if (keyboard_control is not None) and (
-                keyboard_control.parse_events(world)
+            # -- initialize on first
+            if not started:
+                snap = client.world.get_snapshot()
+                frame0 = snap.frame
+                t0 = snap.timestamp.elapsed_seconds
+                actor_manager.initialize(t0=t0, frame0=frame0)
+                npc_manager.initialize(t0=t0, frame0=frame0)
+
+            # -- parse keyboard controls
+            if (
+                (display is not None)
+                and (display.keyboard_control is not None)
+                and (display.keyboard_control.parse_events(client.world))
             ):
                 break
-            # clock.tick_busy_loop()
-            world.tick()
-            done, debug = carla_manager.tick()
-            if (args.max_scenario_len is not None) and (
-                carla_manager.t_elapsed > args.max_scenario_len
-            ):
-                done = True
-            if done:
-                i_repeats_done += 1
-                if cfg_carla["ego"]["respawn_on_done"]:
-                    if i_repeats_done < args.n_scenarios:
-                        print("\ndone...restarting for a new run!")
-                        time.sleep(5)
-                        time_deltas.clear()
-                        i_frames = 0
-                        carla_manager.restart(
-                            save_folder=extend_save_folder(args.save_folder)
-                        )
-                        if display_manager is not None:
-                            display_manager.restart(carla_manager.ego)
-                        print("\n")
-                    else:
-                        print("done running scenarios!")
-                        break
-                else:
-                    print("done!")
-                    break
-            if display_manager is not None:
-                display_manager.tick(world, carla_manager.ego, clock, debug=debug)
-                display_manager.render()
+
+            # -- tick the client
+            client.tick()
+
+            # -- update display (for not only using ego...eventually all actors)
+            debug = {
+                "ground_truth": {"objects": {}},
+                "actors": [{"objects": {}} for _ in actor_manager.objects],
+            }
+            if display is not None:
+                clock.tick_busy_loop()
+                display.tick(client=client, clock=clock, debug=debug)
+                display.render()
 
             # -- print execution rate
             i_frames += 1
@@ -149,40 +133,38 @@ def main(args):
             raise e
         else:
             logging.warning(e, exc_info=True)
+    else:
+        print("Done naturally")
     finally:
-        if started:
-            if carla_manager.recorder is not None:
-                print(
-                    f"Waiting {args.image_dump_time} sec to allow images to dump...",
-                    end="",
-                    flush=True,
-                )
-                try:
-                    time.sleep(args.image_dump_time)
-                except KeyboardInterrupt:
-                    pass  # allow keyboard override
-        print("Done! Cleaning up...")
-        print("\n")
-        if display_manager is not None:
-            print("Destorying display manager")
-            display_manager.destroy()
-        if carla_manager is not None:
-            print("Destorying carla manager")
-            carla_manager.destroy()
+        # wait before destroy
+        try:
+            if args.image_dump_time:
+                print("waiting to allow images to dump...")
+                for i in range(int(args.image_dump_time), 0, -1):
+                    print(f"{i:02d}", end="\r", flush=True)
+                    time.sleep(1)
+        except KeyboardInterrupt:
+            pass
+
+        # destroy display and actors
+        if display is not None:
+            print("Destorying display")
+            display.destroy()
+        if actor_manager is not None:
+            print("Destorying actor manager")
+            actor_manager.destroy()
+        if npc_manager is not None:
+            print("Destroying npc manager")
+            npc_manager.destroy()
         print("Finished cleanup!")
 
 
 if __name__ == "__main__":
     argparser = argparse.ArgumentParser()
-    argparser.add_argument(
-        "--config_carla", required=True
-    )  # default='scenarios/parallel_park.yml'
-    argparser.add_argument(
-        "--config_avstack", default="Level2GroundTruthPerception", required=True
-    )
+    argparser.add_argument("--config_world", required=True)
+    argparser.add_argument("--config_manager", required=True)
     argparser.add_argument("--save_folder", default="sim-results", type=str)
     argparser.add_argument("--seed", default=None, type=int)
-    argparser.add_argument("--view", default="standard", choices=["standard", "front"])
     argparser.add_argument(
         "--version",
         default="0.9.13",
@@ -191,12 +173,6 @@ if __name__ == "__main__":
     argparser.add_argument("--remove_data", action="store_true")
     argparser.add_argument(
         "--image_dump_time", default=10, type=int, help="Time to allow images to dump"
-    )
-    argparser.add_argument(
-        "--n_scenarios", default=None, type=int, help="Number of scenarios for repeats"
-    )
-    argparser.add_argument(
-        "--max_scenario_len", default=None, type=float, help="Time length of scenarios"
     )
     argparser.add_argument(
         "--hard_fail", action="store_true", help="Enable to hard fail with an error"

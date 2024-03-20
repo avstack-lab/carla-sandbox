@@ -10,7 +10,7 @@ __pycache__
 .ipynb_checkpoints/
 
 # DATA
-/sim-results/
+*sim_results
 *.p
 *.pkl
 *.txt

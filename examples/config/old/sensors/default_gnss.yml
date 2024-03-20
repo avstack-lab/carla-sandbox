@@ -1,0 +1,22 @@
+---
+name: 'gps'
+attributes:
+  sensor_tick: 0.10
+mode: 'lla'  # lla, ecef, or pseudo-ranges
+save: false
+
+noise:
+  bias:
+    east: 0
+    north: 0 
+    up: 0
+  sigma:
+    east: .0001 # 0.25
+    north: .0001 # 0.25
+    up: .0001 # 0.25
+
+transform:
+  location:
+    x: 0.01 #1.6
+    y: 0
+    z: 0.01 #1.6

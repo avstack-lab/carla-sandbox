@@ -1,0 +1,16 @@
+---
+name: 'radar'
+attributes:
+  sensor_tick: 0.10
+  horizontal_fov: 30.0
+  vertical_fov: 30.0
+  points_per_second: 1500
+  range: 100.0
+save: true
+mode: 'standard'
+noise: {}
+transform:  # same as the lidar sensor
+  location:
+    x: -0.5
+    y: 0
+    z: 1.8

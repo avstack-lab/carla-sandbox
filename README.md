@@ -1,18 +1,14 @@
 # Carla Sandbox -- A Testbed for Autonomous Vehicles
 
-## Philosophy
-
-Testing autonomous vehicles made *easy*.
-
 ## Installation
 
 This project is currently organized using submodules. In more stable releases, it will be managed with a package manager like `pip`. For now in an *alpha* stage of development, we stay light on our feet by using submodules and [`poetry`][poetry]
 
-**NOTE:** This currently only works on a Linux distribution (tested on Ubuntu 20.04 and 22.04). It also only works with Python 3.8 (to be expanded in the future).
+**NOTE:** This currently only works on a Linux distribution (tested on Ubuntu 20.04 and 22.04). It also only works with Python 3.10 (to be expanded in the future).
 
 ### Requirements
 
-While Carla does not require use of a GPU, it is highly recommended. Using libraries like `mmdet` (for perception, as in [`avstack-core`][avstack-core]) will certainly require a gpu.
+While Carla does not require use of a GPU, it is highly recommended. Using libraries like `mmdet` (for perception, as in [`avstack-core`][avstack-core]) will require a gpu.
 
 ### Preliminaries
 
@@ -60,13 +56,13 @@ Will take about 2-3 minutes, depending on your cpu count.
 poetry install
 ```
 
-#### Models/Datasets
+#### (optional) Models/Datasets
 Will take about 5 minutes the first time you download.
 ```
 ./initialize.sh
 ```
 
-## Running
+## Running a basic example
 
 ### First: run carla through any shell (uses docker)
 For example, run
@@ -84,16 +80,25 @@ poetry shell
 Try running a non-perception example such as:
 ```
 cd examples
-./run_autopilot.sh
-```
-
-Then try running a perception example such as:
-```
-cd examples
-./run_autopilot_camera_perception.sh
+./run_a0_autopilot.sh
 ```
 
 **Note:** You should be in the `examples` folder before running the example scripts.
+
+
+## Collecting a Multi-Agent Dataset
+With the `carla` server already running, run the dataset collection script:
+```
+poetry shell
+cd examples
+./run_a1_dataset_collection.sh
+```
+
+This will log data to the folder `sim_results/`. To use the dataset, we need to run postprocessing. With the poetry shell activated, navigate to `submodules/lib-avstack-carla`. Run the postprocessing:
+```
+python postprocess_carla_objects.py ../../examples/sim_results
+```
+This will take some time, depending on how long you ran the simulation. After postprocessing is complete, inspect the dataset by going back to the `notebooks/` folder and opening `test_carla_dataset.ipynb`.
 
 ## Troubleshooting
 <!-- NOTE: remember to put a line break for any markdown commands in HTML. Otherwise, you need to use only HTML commands-->

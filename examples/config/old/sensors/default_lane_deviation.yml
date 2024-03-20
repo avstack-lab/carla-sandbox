@@ -1,0 +1,12 @@
+---
+name: 'lane deviation'
+attributes:
+  sensor_tick: 0.10
+save: false
+noise: {}
+mode: 'standard'
+transform:
+  location:
+    x: 1.6
+    y: 0
+    z: 1.6
