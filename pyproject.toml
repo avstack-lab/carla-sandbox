@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "carla-sandbox"
+name = "multi-agent-trust-ue"
 version = "0.1.0-alpha.1"
-description = "Sandbox for development with Carla simulator"
+description = "Sandbox for development with testing and prototyping multi-agent using carla simulator"
 authors = ["Spencer Hallyburton <spencer.hallyburton@duke.edu>"]
 readme = "README.md"
 license = "Apache-2.0"
