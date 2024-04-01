@@ -1441,13 +1441,13 @@ test = ["flaky", "ipyparallel", "pre-commit", "pytest (>=7.0)", "pytest-asyncio 
 
 [[package]]
 name = "ipython"
-version = "8.22.2"
+version = "8.23.0"
 description = "IPython: Productive Interactive Computing"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "ipython-8.22.2-py3-none-any.whl", hash = "sha256:3c86f284c8f3d8f2b6c662f885c4889a91df7cd52056fd02b7d8d6195d7f56e9"},
-    {file = "ipython-8.22.2.tar.gz", hash = "sha256:2dcaad9049f9056f1fef63514f176c7d41f930daa78d05b82a176202818f2c14"},
+    {file = "ipython-8.23.0-py3-none-any.whl", hash = "sha256:07232af52a5ba146dc3372c7bf52a0f890a23edf38d77caef8d53f9cdc2584c1"},
+    {file = "ipython-8.23.0.tar.gz", hash = "sha256:7468edaf4f6de3e1b912e57f66c241e6fd3c7099f2ec2136e239e142e800274d"},
 ]
 
 [package.dependencies]
@@ -1461,12 +1461,14 @@ prompt-toolkit = ">=3.0.41,<3.1.0"
 pygments = ">=2.4.0"
 stack-data = "*"
 traitlets = ">=5.13.0"
+typing-extensions = {version = "*", markers = "python_version < \"3.12\""}
 
 [package.extras]
-all = ["ipython[black,doc,kernel,nbconvert,nbformat,notebook,parallel,qtconsole,terminal]", "ipython[test,test-extra]"]
+all = ["ipython[black,doc,kernel,matplotlib,nbconvert,nbformat,notebook,parallel,qtconsole]", "ipython[test,test-extra]"]
 black = ["black"]
 doc = ["docrepr", "exceptiongroup", "ipykernel", "ipython[test]", "matplotlib", "setuptools (>=18.5)", "sphinx (>=1.3)", "sphinx-rtd-theme", "sphinxcontrib-jquery", "stack-data", "typing-extensions"]
 kernel = ["ipykernel"]
+matplotlib = ["matplotlib"]
 nbconvert = ["nbconvert"]
 nbformat = ["nbformat"]
 notebook = ["ipywidgets", "notebook"]
@@ -2505,11 +2507,11 @@ six = "*"
 terminaltables = "*"
 
 [package.extras]
-all = ["cython", "matplotlib", "numpy", "numpy", "scipy", "shapely", "six", "terminaltables"]
+all = ["cython", "matplotlib", "numpy", "scipy", "shapely", "six", "terminaltables"]
 build = ["cython", "numpy"]
 mim = ["mmcv (>=2.0.0rc4,<2.1.0)", "mmengine (>=0.7.1,<1.0.0)"]
 optional = ["cityscapesscripts", "imagecorruptions", "scikit-learn"]
-tests = ["asynctest", "cityscapesscripts", "codecov", "flake8", "imagecorruptions", "instaboostfast", "interrogate", "isort (==4.3.21)", "kwarray", "memory_profiler", "mmtrack", "onnx (==1.7.0)", "onnxruntime (>=1.8.0)", "parameterized", "protobuf (<=3.20.1)", "psutil", "pytest", "ubelt", "xdoctest (>=0.10.0)", "yapf"]
+tests = ["asynctest", "cityscapesscripts", "codecov", "flake8", "imagecorruptions", "instaboostfast", "interrogate", "isort (==4.3.21)", "kwarray", "memory-profiler", "mmtrack", "onnx (==1.7.0)", "onnxruntime (>=1.8.0)", "parameterized", "protobuf (<=3.20.1)", "psutil", "pytest", "ubelt", "xdoctest (>=0.10.0)", "yapf"]
 
 [package.source]
 type = "directory"
@@ -2589,7 +2591,7 @@ prettytable = "*"
 scipy = "*"
 
 [package.extras]
-all = ["cityscapesscripts", "clip", "codecov", "diffusers", "einops (==0.3.0)", "flake8", "ftfy", "ftfy", "imageio (==2.9.0)", "imageio-ffmpeg (==0.4.2)", "interrogate", "invisible-watermark", "kornia (==0.6)", "latent-diffusion", "matplotlib", "nibabel", "numpy", "omegaconf (==2.1.1)", "packaging", "prettytable", "pudb (==2019.2)", "pytest", "pytorch-lightning (==1.4.2)", "regex", "regex", "scipy", "streamlit (>=0.73.1)", "taming-transformers", "test-tube (>=0.7.5)", "timm", "torch-fidelity (==0.3.0)", "torchmetrics (==0.6.0)", "transformers (==4.19.2)", "xdoctest (>=0.10.0)", "yapf"]
+all = ["cityscapesscripts", "clip", "codecov", "diffusers", "einops (==0.3.0)", "flake8", "ftfy", "imageio (==2.9.0)", "imageio-ffmpeg (==0.4.2)", "interrogate", "invisible-watermark", "kornia (==0.6)", "latent-diffusion", "matplotlib", "nibabel", "numpy", "omegaconf (==2.1.1)", "packaging", "prettytable", "pudb (==2019.2)", "pytest", "pytorch-lightning (==1.4.2)", "regex", "scipy", "streamlit (>=0.73.1)", "taming-transformers", "test-tube (>=0.7.5)", "timm", "torch-fidelity (==0.3.0)", "torchmetrics (==0.6.0)", "transformers (==4.19.2)", "xdoctest (>=0.10.0)", "yapf"]
 mim = ["mmcv (>=2.0.0rc4,<2.2.0)", "mmengine (>=0.5.0,<1.0.0)"]
 multimodal = ["ftfy", "regex"]
 optional = ["cityscapesscripts", "clip", "diffusers", "einops (==0.3.0)", "imageio (==2.9.0)", "imageio-ffmpeg (==0.4.2)", "invisible-watermark", "kornia (==0.6)", "latent-diffusion", "nibabel", "omegaconf (==2.1.1)", "pudb (==2019.2)", "pytorch-lightning (==1.4.2)", "streamlit (>=0.73.1)", "taming-transformers", "test-tube (>=0.7.5)", "timm", "torch-fidelity (==0.3.0)", "torchmetrics (==0.6.0)", "transformers (==4.19.2)"]
@@ -3506,13 +3508,13 @@ files = [
 
 [[package]]
 name = "pycparser"
-version = "2.21"
+version = "2.22"
 description = "C parser in Python"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+python-versions = ">=3.8"
 files = [
-    {file = "pycparser-2.21-py2.py3-none-any.whl", hash = "sha256:8ee45429555515e1f6b185e78100aea234072576aa43ab53aefcae078162fca9"},
-    {file = "pycparser-2.21.tar.gz", hash = "sha256:e644fdec12f7872f86c58ff790da456218b10f863970249516d60a5eaca77206"},
+    {file = "pycparser-2.22-py3-none-any.whl", hash = "sha256:c3702b6d3dd8c7abc1afa565d7e63d53a1d0bd86cdc24edd75470f4de499cfcc"},
+    {file = "pycparser-2.22.tar.gz", hash = "sha256:491c8be9c040f5390f5bf44a5b07752bd07f56edf992381b05c701439eec10f6"},
 ]
 
 [[package]]
@@ -4915,7 +4917,7 @@ telegram = ["requests"]
 [[package]]
 name = "trackeval"
 version = "1.0.dev1"
-description = "Code for evaluating object tracking"
+description = ""
 optional = false
 python-versions = "*"
 files = []
@@ -4946,13 +4948,13 @@ test = ["argcomplete (>=3.0.3)", "mypy (>=1.7.0)", "pre-commit", "pytest (>=7.0,
 
 [[package]]
 name = "trimesh"
-version = "4.2.2"
+version = "4.2.4"
 description = "Import, export, process, analyze and view triangular meshes."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "trimesh-4.2.2-py3-none-any.whl", hash = "sha256:076fd788f33a1125ed9e7386ecfcc0ced446ae32849fde41f67da0007214598a"},
-    {file = "trimesh-4.2.2.tar.gz", hash = "sha256:972b1c6fb6189d3e00ee3b93d7ef420656f80e8784d4c4f8e993e14498026bae"},
+    {file = "trimesh-4.2.4-py3-none-any.whl", hash = "sha256:980099a441b21f2e1f96cc007891dcc7858b69dd809ed3fbf5f0d45634703a4c"},
+    {file = "trimesh-4.2.4.tar.gz", hash = "sha256:6aeb201638587b46ff85dfacced8b81a9322977345ebfcae5d26a3cbfd496576"},
 ]
 
 [package.dependencies]
@@ -5083,13 +5085,13 @@ test = ["websockets"]
 
 [[package]]
 name = "werkzeug"
-version = "3.0.1"
+version = "3.0.2"
 description = "The comprehensive WSGI web application library."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "werkzeug-3.0.1-py3-none-any.whl", hash = "sha256:90a285dc0e42ad56b34e696398b8122ee4c681833fb35b8334a095d82c56da10"},
-    {file = "werkzeug-3.0.1.tar.gz", hash = "sha256:507e811ecea72b18a404947aded4b3390e1db8f826b494d76550ef45bb3b1dcc"},
+    {file = "werkzeug-3.0.2-py3-none-any.whl", hash = "sha256:3aac3f5da756f93030740bc235d3e09449efcf65f2f55e3602e1d851b8f48795"},
+    {file = "werkzeug-3.0.2.tar.gz", hash = "sha256:e39b645a6ac92822588e7b39a692e7828724ceae0b0d702ef96701f90e70128d"},
 ]
 
 [package.dependencies]

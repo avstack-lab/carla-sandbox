@@ -40,13 +40,13 @@ actor_manager = {
         },
         {
             "type": "CarlaStaticActor",
-            "spawn": 10,
+            "spawn": 2,
             "sensors": _infra_sensor_suite,
             "pipeline": _empty_pipeline,
         },
         {
             "type": "CarlaStaticActor",
-            "spawn": 14,
+            "spawn": 3,
             "sensors": _infra_sensor_suite,
             "pipeline": _empty_pipeline,
         },
