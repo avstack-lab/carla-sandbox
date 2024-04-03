@@ -5,5 +5,5 @@ source setup_for_standard.bash
 python exec_standard.py \
     --config_manager 'config/manager/dataset_collection.py' \
     --config_world 'config/world/default_world.py' \
-    --seed 1 \
+    --duration 20 \
     --remove_data
