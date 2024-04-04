@@ -1,12 +1,16 @@
 [tool.poetry]
+<<<<<<< HEAD
 name = "carla-sandbox"
+=======
+name = "carla-collaborative"
+>>>>>>> aa836b0 (Revise last commit for notebook data)
 version = "0.1.0-alpha.1"
-description = "Sandbox for development with testing and prototyping multi-agent using carla simulator"
+description = "Multi-agent collaborative testing from the carla simulator"
 authors = ["Spencer Hallyburton <spencer.hallyburton@duke.edu>"]
 readme = "README.md"
 license = "Apache-2.0"
 homepage = "https://avstack.org"
-repository = "https://github.com/avstack-lab/carla-sandbox"
+repository = "https://github.com/cpsl-research/carla-collaborative"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
