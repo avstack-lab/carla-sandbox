@@ -74,7 +74,6 @@ def main(args):
 
         # -- run loop
         time.sleep(1)  # wait for settling
-        i_repeats_done = 0
         t_last = time.time()
         i_frames = 0
         time_deltas = deque(maxlen=10)
@@ -125,8 +124,13 @@ def main(args):
                     end="\r",
                     flush=True,
                 )
+            snap = client.world.get_snapshot()
             t_last = t_now
+            dt_sim = snap.timestamp.elapsed_seconds - t0
             started = True
+            if args.duration:
+                if dt_sim > args.duration:
+                    break
     except (KeyboardInterrupt, Exception) as e:
         print("")
         if args.hard_fail:
@@ -165,6 +169,7 @@ if __name__ == "__main__":
     argparser.add_argument("--config_manager", required=True)
     argparser.add_argument("--save_folder", default="sim-results", type=str)
     argparser.add_argument("--seed", default=None, type=int)
+    argparser.add_argument("--duration", default=None, type=float)
     argparser.add_argument(
         "--version",
         default="0.9.13",
