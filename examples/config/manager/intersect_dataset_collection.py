@@ -101,7 +101,7 @@ actor_manager = {
                 "location": [0, 0, 20],
                 "rotation": [0, 30, 0],
                 "camera": False,
-            }
+            },
         },
         {
             "type": "CarlaStaticActor",
@@ -113,7 +113,7 @@ actor_manager = {
                 "location": [16, -22, 20],
                 "rotation": [0, 30, 90],
                 "camera": False,
-            }
+            },
         },
         {
             "type": "CarlaStaticActor",
@@ -125,9 +125,8 @@ actor_manager = {
                 "location": [16, 30, 20],
                 "rotation": [0, 30, -90],
                 "camera": False,
-            }
+            },
         },
-        
     ],
     "post_hooks": [_object_data_logger],
 }

@@ -93,7 +93,7 @@ _static_actor = {
         "location": [0, 0, 20],
         "rotation": [0, 30, 0],
         "camera": False,
-    }
+    },
 }
 
 _n_mobile_actors = 5
@@ -103,7 +103,7 @@ actor_manager = {
     "subname": "actors",
     "objects": [
         *[_mobile_actor for _ in range(_n_mobile_actors)],
-        *[_static_actor for _ in range(_n_static_actors)]
+        *[_static_actor for _ in range(_n_static_actors)],
     ],
     "post_hooks": [_object_data_logger],
 }
