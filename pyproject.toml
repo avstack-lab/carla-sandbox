@@ -21,6 +21,8 @@ include = ["CHANGELOG.md"]
 [tool.poetry.dependencies]
 python = "~3.10"
 pygame = "^2.1"
+cumm-cu117 = "<0.5.0"
+spconv-cu117 = "~2.3.6"
 carla = { url = "https://g-b0ef78.1d0d8d.03c0.data.globus.org/packages/carla/carla-0.9.13-cp310-cp310-linux_x86_64.whl" }
 lib-avstack-carla = { path = "submodules/lib-avstack-carla", develop = true }
 lib-avstack-api = { path = "submodules/lib-avstack-api", develop = true }
