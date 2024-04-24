@@ -19,6 +19,8 @@ def make_agent_movies(
     img_movies=True,
     bev_movies=True,
     extent=None,
+    *args,
+    **kwargs,
 ):
     os.makedirs(vid_folder, exist_ok=True)
 
@@ -36,6 +38,8 @@ def make_agent_movies(
             show_in_notebook=False,
             projection="img",
             extent=extent,
+            *args,
+            **kwargs,
         )
 
     # tracking movie
@@ -49,6 +53,8 @@ def make_agent_movies(
             show_in_notebook=False,
             projection="img",
             extent=extent,
+            *args,
+            **kwargs,
         )
 
     ###############################################
@@ -65,6 +71,8 @@ def make_agent_movies(
             show_in_notebook=False,
             projection="bev",
             extent=extent,
+            *args,
+            **kwargs,
         )
 
     # tracking movie
@@ -78,10 +86,29 @@ def make_agent_movies(
             show_in_notebook=False,
             projection="bev",
             extent=extent,
+            *args,
+            **kwargs,
         )
 
 
-def make_central_movie(pcs_all, tracks, extent=None, vid_folder="videos"):
+def make_central_movie(*args, **kwargs):
+    _make_joint_movie(*args, prepend="central", **kwargs)
+
+
+def make_collab_movie(*args, **kwargs):
+    _make_joint_movie(*args, prepend="collab", **kwargs)
+
+
+def _make_joint_movie(
+    pcs_all,
+    tracks,
+    ego=None,
+    extent=None,
+    prepend="",
+    vid_folder="videos",
+    *args,
+    **kwargs,
+):
     os.makedirs(vid_folder, exist_ok=True)
 
     # aggregate all point clouds in global frame
@@ -93,9 +120,12 @@ def make_central_movie(pcs_all, tracks, extent=None, vid_folder="videos"):
             pc_data[frame].append(pc.data.x)
     pcs = []
     for i in range(len(pc_data)):
-        pc_data[i] = PointMatrix3D(
-            x=np.concatenate(pc_data[i], axis=0), calibration=calib_global
-        )
+        x = np.concatenate(pc_data[i], axis=0)
+        if ego is not None:
+            ego_x = ego[i].integrate(start_at=GlobalOrigin3D).x
+            rng_from_ego = np.linalg.norm(x[:, :2] - ego_x[:2], axis=1)[:, None]
+            x = np.concatenate((x, rng_from_ego), axis=1)
+        pc_data[i] = PointMatrix3D(x=x, calibration=calib_global)
         pcs.append(
             LidarData(
                 data=pc_data[i],
@@ -112,9 +142,11 @@ def make_central_movie(pcs_all, tracks, extent=None, vid_folder="videos"):
         raw_imgs=[[]] * len(pcs),
         raw_pcs=pcs,
         boxes=tracks,
-        name=os.path.join(vid_folder, f"central-tracking-bev"),
+        name=os.path.join(vid_folder, f"{prepend}-tracking-bev"),
         save=True,
         show_in_notebook=False,
         projection="bev",
         extent=extent,
+        *args,
+        **kwargs,
     )
