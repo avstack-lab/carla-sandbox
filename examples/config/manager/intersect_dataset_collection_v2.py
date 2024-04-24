@@ -13,6 +13,19 @@ _object_data_logger = {
     "type": "ObjectStateLogger",
     "output_folder": os.path.join(_save_folder, "objects"),
 }
+_observation_cameras = [
+    {
+        "type": "CarlaRgbCamera",
+        "name": "camera-0",
+        "reference": {
+            "type": "CarlaReferenceFrame",
+            "camera": True,
+        },
+        "image_size_x": 1280,
+        "image_size_y": 1280,
+        "post_hooks": [_sensor_data_logger],
+    },
+]
 _infra_sensor_suite = [
     {
         "type": "CarlaRgbCamera",
@@ -127,6 +140,30 @@ actor_manager = {
                 "camera": False,
             },
         },
+        # {
+        #     "type": "CarlaStaticActor",
+        #     "spawn": 1,
+        #     "sensors": _observation_cameras,
+        #     "pipeline": _empty_pipeline,
+        #     "reference_to_spawn": {
+        #         "type": "CarlaReferenceFrame",
+        #         "location": [10, 5, 70],
+        #         "rotation": [0, 90, 90],
+        #         "camera": False,
+        #     },
+        # },
+        # {
+        #     "type": "CarlaStaticActor",
+        #     "spawn": 1,
+        #     "sensors": _observation_cameras,
+        #     "pipeline": _empty_pipeline,
+        #     "reference_to_spawn": {
+        #         "type": "CarlaReferenceFrame",
+        #         "location": [60, 5, 140],
+        #         "rotation": [0, 90, 90],
+        #         "camera": False,
+        #     },
+        # },
     ],
     "post_hooks": [_object_data_logger],
 }
@@ -140,10 +177,20 @@ npc_manager = {
         {
             "type": "CarlaNpc",
             "spawn": 1,
-            "npc_type": "vehicle.tesla.cybertruck",
+            "npc_type": "vehicle.volkswagen.t2",
             "reference_to_spawn": {
                 "type": "CarlaReferenceFrame",
                 "location": [-22, 3.6, 0],
+                "camera": False,
+            },
+        },
+        {
+            "type": "CarlaNpc",
+            "spawn": 1,
+            "npc_type": "vehicle.nissan.patrol_2021",
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [-26, 3.6, 0],
                 "camera": False,
             },
         },

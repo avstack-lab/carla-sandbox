@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-bash _run_carla_bash.sh 0.9.13
+bash _run_carla_bash.sh 0.9.13 "$@"
