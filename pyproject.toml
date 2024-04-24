@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "multi-agent-trust-ue"
+name = "carla-sandbox"
 version = "0.1.0-alpha.1"
 description = "Sandbox for development with testing and prototyping multi-agent using carla simulator"
 authors = ["Spencer Hallyburton <spencer.hallyburton@duke.edu>"]

@@ -82,7 +82,7 @@ actor_manager = {
             "spawn": 1,
             "reference_to_spawn": {
                 "type": "CarlaReferenceFrame",
-                "location": [-20, 0, 0],
+                "location": [-24, 0, 0],
                 "camera": False,
             },
             "vehicle": 1,
@@ -136,8 +136,31 @@ npc_manager = {
     "type": "CarlaObjectManager",
     "subname": "npcs",
     "objects": [
-        {"type": "CarlaNpc", "spawn": "random", "npc_type": "vehicle"}
-        for _ in range(_n_npcs)
+        # these go with random seed XX
+        {
+            "type": "CarlaNpc",
+            "spawn": 1,
+            "npc_type": "vehicle.tesla.cybertruck",
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [-22, 3.6, 0],
+                "camera": False,
+            },
+        },
+        {
+            "type": "CarlaNpc",
+            "spawn": 1,
+            "npc_type": "vehicle.mercedes.sprinter",
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [-24, 0, 0],
+                "camera": False,
+            },
+        },
+        *[
+            {"type": "CarlaNpc", "spawn": "random", "npc_type": "vehicle"}
+            for _ in range(_n_npcs)
+        ],
     ],
     "post_hooks": [_object_data_logger],
 }
