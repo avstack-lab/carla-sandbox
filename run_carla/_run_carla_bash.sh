@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 VERSION=$1
+QUALITY=${2:-Low}
 
 xhost local:root
 
@@ -8,7 +9,7 @@ xhost local:root
 docker pull carlasim/carla:"$VERSION"
 
 # quality
-if [ $(hostname) = "primus" ]; then
+if [ $(hostname) = "primus" ] || [ "$QUALITY" = "Epic" ]; then
 	QUALITY="Epic"
 else
 	QUALITY="Low"
@@ -16,12 +17,12 @@ fi
 echo "Running with $QUALITY quality"
 
 # try run command
-CONT_ID=$(docker ps -aqf "name=^carla_docker_${VERSION//./}")
+CONT_ID=$(docker ps -aqf "name=^carla_docker_${QUALITY}_${VERSION//./}")
 if [ "$CONT_ID" == "" ];
 then
 	echo "Starting fresh docker container"
 	docker run -p 2000-2002:2000-2002\
-	  --name carla_docker_"${VERSION//./}" \
+	  --name "carla_docker_${QUALITY}_${VERSION//./}" \
 	  --privileged \
 	  --cpuset-cpus="0-5" \
 	   --runtime=nvidia \

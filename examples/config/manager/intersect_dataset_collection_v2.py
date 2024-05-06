@@ -13,6 +13,19 @@ _object_data_logger = {
     "type": "ObjectStateLogger",
     "output_folder": os.path.join(_save_folder, "objects"),
 }
+_observation_cameras = [
+    {
+        "type": "CarlaRgbCamera",
+        "name": "camera-0",
+        "reference": {
+            "type": "CarlaReferenceFrame",
+            "camera": True,
+        },
+        "image_size_x": 1280,
+        "image_size_y": 1280,
+        "post_hooks": [_sensor_data_logger],
+    },
+]
 _infra_sensor_suite = [
     {
         "type": "CarlaRgbCamera",
@@ -82,7 +95,7 @@ actor_manager = {
             "spawn": 1,
             "reference_to_spawn": {
                 "type": "CarlaReferenceFrame",
-                "location": [-20, 0, 0],
+                "location": [-24, 0, 0],
                 "camera": False,
             },
             "vehicle": 1,
@@ -127,6 +140,30 @@ actor_manager = {
                 "camera": False,
             },
         },
+        {
+            "type": "CarlaStaticActor",
+            "spawn": 1,
+            "sensors": _observation_cameras,
+            "pipeline": _empty_pipeline,
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [10, 5, 70],
+                "rotation": [0, 90, 90],
+                "camera": False,
+            },
+        },
+        {
+            "type": "CarlaStaticActor",
+            "spawn": 1,
+            "sensors": _observation_cameras,
+            "pipeline": _empty_pipeline,
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [60, 5, 140],
+                "rotation": [0, 90, 90],
+                "camera": False,
+            },
+        },
     ],
     "post_hooks": [_object_data_logger],
 }
@@ -136,8 +173,41 @@ npc_manager = {
     "type": "CarlaObjectManager",
     "subname": "npcs",
     "objects": [
-        {"type": "CarlaNpc", "spawn": "random", "npc_type": "vehicle"}
-        for _ in range(_n_npcs)
+        # these go with random seed XX
+        {
+            "type": "CarlaNpc",
+            "spawn": 1,
+            "npc_type": "vehicle.volkswagen.t2",
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [-22, 3.6, 0],
+                "camera": False,
+            },
+        },
+        {
+            "type": "CarlaNpc",
+            "spawn": 1,
+            "npc_type": "vehicle.nissan.patrol_2021",
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [-26, 3.6, 0],
+                "camera": False,
+            },
+        },
+        {
+            "type": "CarlaNpc",
+            "spawn": 1,
+            "npc_type": "vehicle.mercedes.sprinter",
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [-24, 0, 0],
+                "camera": False,
+            },
+        },
+        *[
+            {"type": "CarlaNpc", "spawn": "random", "npc_type": "vehicle"}
+            for _ in range(_n_npcs)
+        ],
     ],
     "post_hooks": [_object_data_logger],
 }
