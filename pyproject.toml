@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "carla-sandbox"
+name = "carla-collaborative"
 version = "0.1.0-alpha.1"
-description = "Sandbox for development with testing and prototyping multi-agent using carla simulator"
+description = "Multi-agent collaborative testing from the carla simulator"
 authors = ["Spencer Hallyburton <spencer.hallyburton@duke.edu>"]
 readme = "README.md"
 license = "Apache-2.0"
 homepage = "https://avstack.org"
-repository = "https://github.com/avstack-lab/carla-sandbox"
+repository = "https://github.com/cpsl-research/carla-collaborative"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
@@ -17,6 +17,8 @@ include = ["CHANGELOG.md"]
 [tool.poetry.dependencies]
 python = "~3.10"
 pygame = "^2.1"
+cumm-cu117 = "<0.5.0"
+spconv-cu117 = "~2.3.6"
 carla = { url = "https://g-b0ef78.1d0d8d.03c0.data.globus.org/packages/carla/carla-0.9.13-cp310-cp310-linux_x86_64.whl" }
 lib-avstack-carla = { path = "submodules/lib-avstack-carla", develop = true }
 lib-avstack-api = { path = "submodules/lib-avstack-api", develop = true }

@@ -7,3 +7,8 @@
 [submodule "submodules/lib-avstack-carla"]
 	path = submodules/lib-avstack-carla
 	url = https://github.com/avstack-lab/lib-avstack-carla
+
+[submodule "submodules/OpenCOOD"]
+	path = submodules/OpenCOOD
+	url = https://github.com/zqzqz/OpenCOOD.git
+	branch = carla_demo

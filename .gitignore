@@ -1,5 +1,6 @@
-./data
-./models
+/data
+/models
+
 *.mp4
 *.pdf
 *.vscode
