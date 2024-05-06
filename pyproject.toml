@@ -1,9 +1,5 @@
 [tool.poetry]
-<<<<<<< HEAD
-name = "carla-sandbox"
-=======
 name = "carla-collaborative"
->>>>>>> aa836b0 (Revise last commit for notebook data)
 version = "0.1.0-alpha.1"
 description = "Multi-agent collaborative testing from the carla simulator"
 authors = ["Spencer Hallyburton <spencer.hallyburton@duke.edu>"]
