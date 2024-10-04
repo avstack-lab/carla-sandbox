@@ -76,7 +76,7 @@ _empty_pipeline = {"type": "SerialPipeline", "modules": []}
 _mobile_actor = {
     "type": "CarlaMobileActor",
     "spawn": "random",
-    "vehicle": 0,
+    "vehicle": "random",
     "destination": None,
     "autopilot": True,
     "sensors": _mobile_sensor_suite,
