@@ -1,18 +1,13 @@
-import datetime
-import os
-
-
-_save_folder = "sim_results/run-{date:%Y-%m-%d_%H:%M:%S}-intersection".format(
-    date=datetime.datetime.now()
-)
 _sensor_data_logger = {
     "type": "SensorDataLogger",
-    "output_folder": os.path.join(_save_folder, "data"),
+    "output_folder": "sim_results/__OUTPUT_FOLDER__/data",
 }
+
 _object_data_logger = {
     "type": "ObjectStateLogger",
-    "output_folder": os.path.join(_save_folder, "objects"),
+    "output_folder": "sim_results/__OUTPUT_FOLDER__/objects",
 }
+
 _infra_sensor_suite = [
     {
         "type": "CarlaRgbCamera",
@@ -131,32 +126,11 @@ actor_manager = {
     "post_hooks": [_object_data_logger],
 }
 
-_n_npcs = 50
+_n_npcs = 0  # only the npcs we specify below
 npc_manager = {
     "type": "CarlaObjectManager",
     "subname": "npcs",
     "objects": [
-        # these go zwith random seed 4
-        {
-            "type": "CarlaNpc",
-            "spawn": 1,
-            "npc_type": "vehicle.ford.ambulance",
-            "reference_to_spawn": {
-                "type": "CarlaReferenceFrame",
-                "location": [-16, 3.6, 0],
-                "camera": False,
-            },
-        },
-        {
-            "type": "CarlaNpc",
-            "spawn": 1,
-            "npc_type": "vehicle.carlamotors.carlacola",
-            "reference_to_spawn": {
-                "type": "CarlaReferenceFrame",
-                "location": [-18, 0, 0],
-                "camera": False,
-            },
-        },
         *[
             {"type": "CarlaNpc", "spawn": "random", "npc_type": "vehicle"}
             for _ in range(_n_npcs)

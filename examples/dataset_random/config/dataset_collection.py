@@ -1,18 +1,13 @@
-import datetime
-import os
-
-
-_save_folder = "sim_results/run-{date:%Y-%m-%d_%H:%M:%S}".format(
-    date=datetime.datetime.now()
-)
 _sensor_data_logger = {
     "type": "SensorDataLogger",
-    "output_folder": os.path.join(_save_folder, "data"),
+    "output_folder": "sim_results/__OUTPUT_FOLDER__/data",
 }
+
 _object_data_logger = {
     "type": "ObjectStateLogger",
-    "output_folder": os.path.join(_save_folder, "objects"),
+    "output_folder": "sim_results/__OUTPUT_FOLDER__/objects",
 }
+
 _infra_sensor_suite = [
     {
         "type": "CarlaRgbCamera",

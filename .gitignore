@@ -16,6 +16,8 @@ __pycache__
 *sim_results
 *.p
 *.pkl
+*.pickle
+*.json
 *.txt
 *.bin
 *.png

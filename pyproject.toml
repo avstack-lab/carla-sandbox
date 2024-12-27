@@ -23,6 +23,7 @@ carla = { url = "https://g-b0ef78.1d0d8d.03c0.data.globus.org/packages/carla/car
 lib-avstack-carla = { path = "submodules/lib-avstack-carla", develop = true }
 lib-avstack-api = { path = "submodules/lib-avstack-api", develop = true }
 lib-avstack-core = { path = "submodules/lib-avstack-core", extras = ["percep"], develop = true }
+mate = {path = "submodules/multi-agent-trust-estimator", develop = true }
 
 [tool.poetry.group.test.dependencies]
 snakeviz="^2.1.1"

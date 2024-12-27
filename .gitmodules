@@ -12,3 +12,6 @@
 	path = submodules/OpenCOOD
 	url = https://github.com/zqzqz/OpenCOOD.git
 	branch = carla_demo
+[submodule "submodules/multi-agent-trust-estimator"]
+	path = submodules/multi-agent-trust-estimator
+	url = https://github.com/cpsl-research/multi-agent-trust-estimator
