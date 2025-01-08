@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-# @Author: Spencer H
-# @Date:   2022-03-20
-# @Last Modified by:   Spencer H
-# @Last Modified date: 2022-10-22
-# @Description:
 """
 Run a standard scenario from config file
 """
@@ -18,16 +12,54 @@ import shutil
 import time
 from collections import deque
 from datetime import datetime
+from types import ModuleType
 
+import numpy as np
 import pygame
 from avcarla import CARLA
 from avstack.config import Config
 
 
-def extend_save_folder(folder_base):
-    return os.path.join(
-        folder_base, "run_" + datetime.now().strftime("%Y_%m_%d_%H:%M:%S")
-    )
+def get_datetime_run():
+    return "run-{date:%Y-%m-%d_%H:%M:%S}".format(date=datetime.now())
+
+
+def parse_string_substitute(string: str) -> str:
+    str_split = string.split("__")
+    if len(str_split) == 3:
+        to_sub_for = str_split[1]
+        if to_sub_for == "OUTPUT_FOLDER":
+            string_sub = get_datetime_run()
+        else:
+            raise NotImplementedError(to_sub_for)
+        string_out = str_split[0] + string_sub + str_split[2]
+    else:
+        string_out = string
+    return string_out
+
+
+def parse_config(cfg: Config) -> Config:
+    if isinstance(cfg, (Config, dict)):
+        items_list = list(cfg.items())
+        for k, v in items_list:
+            if not isinstance(v, ModuleType):
+                cfg[k] = parse_config(v)
+            else:
+                cfg.pop(k)
+    elif isinstance(cfg, str):
+        cfg = parse_string_substitute(cfg)
+    elif isinstance(cfg, (list, np.ndarray)):
+        cfg = [parse_config(cfg_item) for cfg_item in cfg]
+    elif isinstance(cfg, (int, float, np.int64, np.float64)):
+        pass
+    elif cfg is None:
+        pass
+    elif isinstance(cfg, tuple):
+        cfg = tuple([parse_config(cfg_item) for cfg_item in cfg])
+    else:
+        breakpoint()
+        raise NotImplementedError(type(cfg))
+    return cfg
 
 
 def main(args):
@@ -49,13 +81,13 @@ def main(args):
     npc_manager = None
     clock = None
 
-    cfg_manager = Config.fromfile(args.config_manager)
-    cfg_world = Config.fromfile(args.config_world)
+    cfg_manager = parse_config(Config.fromfile(args.config_manager))
+    cfg_world = parse_config(Config.fromfile(args.config_world))
 
     # Main loop
     try:
         # -- initializations
-        client = CARLA.build(cfg_world["client"])
+        client = CARLA.build(cfg_world["client"], default_args={"seed": args.seed})
         actor_manager = CARLA.build(
             cfg_manager["actor_manager"], default_args={"client": client}
         )

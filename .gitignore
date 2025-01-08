@@ -1,5 +1,6 @@
-./data
-./models
+/data
+/models
+
 *.mp4
 *.pdf
 *.vscode
@@ -15,6 +16,8 @@ __pycache__
 *sim_results
 *.p
 *.pkl
+*.pickle
+*.json
 *.txt
 *.bin
 *.png

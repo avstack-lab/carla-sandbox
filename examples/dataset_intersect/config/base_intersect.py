@@ -1,18 +1,13 @@
-import datetime
-import os
-
-
-_save_folder = "sim_results/run-{date:%Y-%m-%d_%H:%M:%S}".format(
-    date=datetime.datetime.now()
-)
 _sensor_data_logger = {
     "type": "SensorDataLogger",
-    "output_folder": os.path.join(_save_folder, "data"),
+    "output_folder": "sim_results/__OUTPUT_FOLDER__/data",
 }
+
 _object_data_logger = {
     "type": "ObjectStateLogger",
-    "output_folder": os.path.join(_save_folder, "objects"),
+    "output_folder": "sim_results/__OUTPUT_FOLDER__/objects",
 }
+
 _infra_sensor_suite = [
     {
         "type": "CarlaRgbCamera",
@@ -73,48 +68,73 @@ _mobile_sensor_suite = [
 ]
 _empty_pipeline = {"type": "SerialPipeline", "modules": []}
 
-_mobile_actor = {
-    "type": "CarlaMobileActor",
-    "spawn": "random",
-    "vehicle": "random",
-    "destination": None,
-    "autopilot": True,
-    "sensors": _mobile_sensor_suite,
-    "pipeline": _empty_pipeline,
-}
-
-_static_actor = {
-    "type": "CarlaStaticActor",
-    "spawn": "random",
-    "sensors": _infra_sensor_suite,
-    "pipeline": _empty_pipeline,
-    "reference_to_spawn": {
-        "type": "CarlaReferenceFrame",
-        "location": [0, 0, 20],
-        "rotation": [0, 30, 0],
-        "camera": False,
-    },
-}
-
-_n_mobile_actors = 5
-_n_static_actors = 5
 actor_manager = {
     "type": "CarlaObjectManager",
     "subname": "actors",
     "objects": [
-        *[_mobile_actor for _ in range(_n_mobile_actors)],
-        *[_static_actor for _ in range(_n_static_actors)],
+        {
+            "type": "CarlaMobileActor",
+            "spawn": 1,
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [-20, 0, 0],
+                "camera": False,
+            },
+            "vehicle": 1,
+            "destination": None,
+            "autopilot": True,
+            "sensors": _mobile_sensor_suite,
+            "pipeline": _empty_pipeline,
+        },
+        {
+            "type": "CarlaStaticActor",
+            "spawn": 1,
+            "sensors": _infra_sensor_suite,
+            "pipeline": _empty_pipeline,
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [0, 0, 20],
+                "rotation": [0, 30, 0],
+                "camera": False,
+            },
+        },
+        {
+            "type": "CarlaStaticActor",
+            "spawn": 1,
+            "sensors": _infra_sensor_suite,
+            "pipeline": _empty_pipeline,
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [16, -22, 20],
+                "rotation": [0, 30, 90],
+                "camera": False,
+            },
+        },
+        {
+            "type": "CarlaStaticActor",
+            "spawn": 1,
+            "sensors": _infra_sensor_suite,
+            "pipeline": _empty_pipeline,
+            "reference_to_spawn": {
+                "type": "CarlaReferenceFrame",
+                "location": [16, 30, 20],
+                "rotation": [0, 30, -90],
+                "camera": False,
+            },
+        },
     ],
     "post_hooks": [_object_data_logger],
 }
 
-_n_npcs = 80
+_n_npcs = 0  # only the npcs we specify below
 npc_manager = {
     "type": "CarlaObjectManager",
     "subname": "npcs",
     "objects": [
-        {"type": "CarlaNpc", "spawn": "random", "npc_type": "vehicle"}
-        for _ in range(_n_npcs)
+        *[
+            {"type": "CarlaNpc", "spawn": "random", "npc_type": "vehicle"}
+            for _ in range(_n_npcs)
+        ],
     ],
     "post_hooks": [_object_data_logger],
 }

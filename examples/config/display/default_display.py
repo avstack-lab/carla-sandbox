@@ -1,3 +1,8 @@
+_hud_data_logger = {
+    "type": "SensorDataLogger",
+    "output_folder": "sim_results/__OUTPUT_FOLDER__/hud",
+}
+
 display = {
     "type": "CarlaDisplay",
     "enabled": True,
@@ -15,6 +20,7 @@ display = {
             },
             "do_spawn": False,
             "do_listen": False,
+            "post_hooks": [_hud_data_logger],
         },
         {
             "type": "CarlaRgbCamera",
@@ -29,6 +35,7 @@ display = {
             },
             "do_spawn": False,
             "do_listen": False,
+            "post_hooks": [_hud_data_logger],
         },
         {
             "type": "CarlaRgbCamera",
@@ -43,6 +50,7 @@ display = {
             },
             "do_spawn": False,
             "do_listen": False,
+            "post_hooks": [_hud_data_logger],
         },
     ],
 }
