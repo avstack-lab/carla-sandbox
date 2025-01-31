@@ -4,7 +4,7 @@
 
 This project is currently organized using submodules. In more stable releases, it will be managed with a package manager like `pip`. For now in an *alpha* stage of development, we stay light on our feet by using submodules and [`poetry`][poetry]
 
-**NOTE:** This currently only works on a Linux distribution (tested on Ubuntu 20.04 and 22.04). It also only works with Python 3.10 (to be expanded in the future).
+**NOTE:** This currently only works on a Linux distribution (tested on Ubuntu 22.04 and 24.04). It also only works with Python 3.10 (to be expanded in the future).
 
 ### Requirements
 

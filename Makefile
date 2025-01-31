@@ -1,7 +1,7 @@
 NAME := carla-sandbox
 INSTALL_STAMP := .install.stamp
 POETRY := $(shell command -v poetry 2> /dev/null)
-PYFOLDERS := examples notebooks
+PYFOLDERS := examples notebooks analysis converter
 .DEFAULT_GOAL := help
 
 .PHONY: help
