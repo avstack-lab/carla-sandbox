@@ -37,9 +37,9 @@ lint: $(INSTALL_STAMP)
 
 .PHONY: format
 format: $(INSTALL_STAMP)
-		$(POETRY) run autoflake --remove-all-unused-imports -i -r ./tests/ $(PYFOLDERS) --exclude=__init__.py 
-		$(POETRY) run isort --profile=black --lines-after-imports=2 ./tests/ $(PYFOLDERS)
-		$(POETRY) run black ./tests/ $(PYFOLDERS)
+		$(POETRY) run autoflake --remove-all-unused-imports -i -r ./tests/ $(PYFOLDERS) --exclude=__init__.py,sim_results 
+		$(POETRY) run isort --profile=black --lines-after-imports=2 ./tests/ $(PYFOLDERS) --skip sim_results
+		$(POETRY) run black ./tests/ $(PYFOLDERS) --exclude sim_results
 
 .PHONY: test
 test: $(INSTALL_STAMP)

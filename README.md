@@ -2,9 +2,7 @@
 
 ## Installation
 
-This project is currently organized using submodules. In more stable releases, it will be managed with a package manager like `pip`. For now in an *alpha* stage of development, we stay light on our feet by using submodules and [`poetry`][poetry]
-
-**NOTE:** This currently only works on a Linux distribution (tested on Ubuntu 22.04 and 24.04). It also only works with Python 3.10 (to be expanded in the future).
+This currently only works on a Linux distribution (tested on Ubuntu 22.04 and 24.04). It also only works with Python 3.10 (to be expanded in the future).
 
 ### Requirements
 
@@ -57,7 +55,7 @@ poetry install
 ```
 
 #### (optional) Models/Datasets
-Will take about 5 minutes the first time you download.
+This is needed if you want to run perception algorithms online. It will take about 5 minutes the first time you download.
 ```
 ./initialize.sh
 ```
@@ -79,24 +77,22 @@ poetry shell
 
 Try running a non-perception example such as:
 ```
-cd examples
-./run_a0_autopilot.sh
+cd examples/demos
+./run_autopilot.sh
 ```
 
-**Note:** You should be in the `examples` folder before running the example scripts.
+## Collecting a Dataset
+With the `carla` server already running, run a dataset collection script such as:
 
-
-## Collecting a Multi-Agent Dataset
-With the `carla` server already running, run the dataset collection script:
 ```
 poetry shell
-cd examples
-./run_a1_dataset_collection.sh
+cd examples/dataset_ground
+./run_ground_dataset_collection.sh
 ```
 
-This will log data to the folder `sim_results/`. To use the dataset, we need to run postprocessing. With the poetry shell activated, navigate to `submodules/lib-avstack-carla`. Run the postprocessing:
+This will log data to the folder `sim_results/`. To use the dataset, we need to run postprocessing. With the poetry shell activated, run the postprocessing script from the main directory:
 ```
-python postprocess_carla_objects.py ../../examples/sim_results
+python postprocess_carla_objects.py examples/dataset_ground/sim_results
 ```
 This will take some time, depending on how long you ran the simulation. After postprocessing is complete, inspect the dataset by going back to the `notebooks/` folder and opening `test_carla_dataset.ipynb`.
 
